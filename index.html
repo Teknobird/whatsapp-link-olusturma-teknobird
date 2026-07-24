@@ -28,14 +28,26 @@
   }
 
   .card{
-    max-width:520px;
+    width:100%;
+    max-width:100%;
     margin:0 auto;
     background:linear-gradient(180deg, var(--panel), var(--panel-2));
     border:1px solid var(--line);
     border-radius:18px;
-    padding:24px;
+    padding:32px 36px;
     position:relative;
     overflow:hidden;
+  }
+
+  /* On wide containers, lay the two fields side-by-side for a fuller look */
+  @media (min-width: 640px){
+    .fields-row{
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+    }
+    .fields-row .field{flex:1; margin-bottom:0;}
+    .field:has(#message){display:flex; flex-direction:column;}
   }
   .card::before{
     content:"";
@@ -93,6 +105,11 @@
     background:var(--mint); color:#052015;
     transition:transform .12s ease, box-shadow .12s ease;
     box-shadow:0 10px 26px -12px rgba(61,220,151,0.55);
+    margin-top:4px;
+  }
+  @media (min-width: 640px){
+    .btn{max-width:320px; display:block; margin-left:auto; margin-right:auto;}
+    .result{max-width:520px; margin-left:auto; margin-right:auto;}
   }
   .btn:hover{transform:translateY(-1px);}
   .btn:active{transform:translateY(0);}
@@ -145,29 +162,31 @@
     </div>
   </div>
 
-  <div class="field" id="phoneField">
-    <label for="phone">Telefon Numarası</label>
-    <div class="phone-row">
-      <select id="country">
-        <option value="90">TR +90</option>
-        <option value="1">US +1</option>
-        <option value="49">DE +49</option>
-        <option value="44">GB +44</option>
-        <option value="31">NL +31</option>
-        <option value="971">AE +971</option>
-        <option value="7">RU +7</option>
-        <option value="33">FR +33</option>
-      </select>
-      <input type="tel" id="phone" placeholder="5XX XXX XX XX" maxlength="14">
+  <div class="fields-row">
+    <div class="field" id="phoneField">
+      <label for="phone">Telefon Numarası</label>
+      <div class="phone-row">
+        <select id="country">
+          <option value="90">TR +90</option>
+          <option value="1">US +1</option>
+          <option value="49">DE +49</option>
+          <option value="44">GB +44</option>
+          <option value="31">NL +31</option>
+          <option value="971">AE +971</option>
+          <option value="7">RU +7</option>
+          <option value="33">FR +33</option>
+        </select>
+        <input type="tel" id="phone" placeholder="5XX XXX XX XX" maxlength="14">
+      </div>
+      <div class="error-msg" id="phoneError">Lütfen geçerli bir numara girin (başında 0 olmadan).</div>
+      <div class="hint">Numarayı başında 0 <strong>olmadan</strong>, sadece rakamlarla girin.</div>
     </div>
-    <div class="error-msg" id="phoneError">Lütfen geçerli bir numara girin (başında 0 olmadan).</div>
-    <div class="hint">Numarayı başında 0 <strong>olmadan</strong>, sadece rakamlarla girin.</div>
-  </div>
 
-  <div class="field">
-    <label for="message">Hazır Mesaj (opsiyonel)</label>
-    <textarea id="message" maxlength="300" placeholder="Örn. Merhaba, ürün hakkında bilgi almak istiyorum."></textarea>
-    <div class="char-count"><span id="charCount">0</span>/300</div>
+    <div class="field">
+      <label for="message">Hazır Mesaj (opsiyonel)</label>
+      <textarea id="message" maxlength="300" placeholder="Örn. Merhaba, ürün hakkında bilgi almak istiyorum."></textarea>
+      <div class="char-count"><span id="charCount">0</span>/300</div>
+    </div>
   </div>
 
   <button class="btn" id="generateBtn">Link Oluştur</button>
