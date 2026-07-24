@@ -280,6 +280,25 @@
   });
 
   output.addEventListener('click', function(){ output.select(); });
+
+  // ---- Auto-height reporting to parent (for iframe embeds) ----
+  function reportHeight(){
+    if(window.parent && window.parent !== window){
+      var h = document.body.scrollHeight;
+      try{
+        window.parent.postMessage({ waToolHeight: h }, '*');
+      }catch(e){}
+    }
+  }
+  // Report on load, on any input/resize, and whenever the result box toggles
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  msgInput.addEventListener('input', reportHeight);
+  phoneInput.addEventListener('input', reportHeight);
+  var resultObserver = new MutationObserver(reportHeight);
+  resultObserver.observe(result, { attributes:true, attributeFilter:['class'] });
+  setTimeout(reportHeight, 300);
+  setTimeout(reportHeight, 1000);
 })();
 </script>
 
